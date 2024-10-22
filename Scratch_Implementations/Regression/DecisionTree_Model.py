@@ -26,7 +26,7 @@ class DecisionTree:
     def fit(self, X, y):
         self.n_features = X.shape[1] if not self.n_features else min(X.shape[1], self.n_feature)
         if(X.shape[1]<self.n_features):
-            print("No feature inputed is more than max No feture, n_feature = max_features")
+            print("No. feature inputed is more than max No. feture, n_feature = max_features")
             
         # Creating tree, this will be the basis for prediction
         self.root = self._grow_tree(X, y)
