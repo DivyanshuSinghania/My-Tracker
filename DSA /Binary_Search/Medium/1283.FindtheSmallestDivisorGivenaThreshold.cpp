@@ -5,82 +5,45 @@
 
 using namespace std;
 
-int banquetsToday(int past_days, vector<int>& bloomDay, int k, int size){
-        int kSize = 0;
-        int mToday = 0;
-        for(int i = 0;i<size;i++)
-        {
-            // [1,10,2,9,3,8,4,7,5,6]
-            if(bloomDay[i]<=past_days){
-                kSize++;
-                if(kSize == k){
-                    mToday++;
-                    kSize = 0;
-                }
-            }
-            else{
-                kSize = 0;
-            }
-        }
-        return mToday;
-    }
-
-    int minDays(vector<int>& bloomDay, int m, int k) {
-        long size = bloomDay.size();
-        if(size < long(m)*long(k)){
-            return -1;
-        }
-        int low = *min_element(bloomDay.begin(), bloomDay.end());
-        int high = *max_element(bloomDay.begin(), bloomDay.end());
-        int minm = INT_MAX;
-        while (low<=high)
+int smallestDivisor(vector<int>& nums, int threshold) {
+        int n = nums.size();
+        int low = 1;
+        int high = *max_element(nums.begin(), nums.end());
+        int ans = INT_MAX;
+        while (low <= high)
         {
             int mid = high - (high - low)/2;
-            int mOnMid = banquetsToday(mid, bloomDay, k, size);
-            if(mOnMid>m){
-                high = mid-1;
-                minm = min(minm, mid);
+            // cout << "mid " << mid << endl;
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += (nums[i] + mid - 1)/mid;
             }
-            else if(mOnMid<m){
+            // cout << "sum " << sum << endl;
+            // cout << endl;
+            if(sum > threshold){
                 low = mid+1;
             }
-            else{
+            else if(sum <= threshold){
                 high = mid-1;
-                minm = min(minm, mid);
+                ans = min(ans, mid);
             }
         }
-        // if (minm == INT_MAX)
-        // {
-        //     return high;
-        // }
-        return minm;
+        return ans;
     }
 
 int main(){
 
-    int m = 4;
-    int k = 2;
+    // int k = 2;
     vector<int> nums;
-    // nums.push_back(1);
-    // nums.push_back(10);
-    // nums.push_back(3);
-    // nums.push_back(10);
-    // nums.push_back(2);
-    // nums.push_back(7);
-    // [1000000000,1000000000]
-    // nums.push_back(1000000000);
-    // nums.push_back(1000000000);
-    // [1,10,2,9,3,8,4,7,5,6]
+// nums = [44,22,33,11,1], threshold = 5
+    int t = 5;
+    nums.push_back(44);
+    nums.push_back(22);
+    nums.push_back(33);
+    nums.push_back(11);
     nums.push_back(1);
-    nums.push_back(10);
-    nums.push_back(2);
-    nums.push_back(9);
-    nums.push_back(3);
-    nums.push_back(8);
-    nums.push_back(4);
-    nums.push_back(7);
-    nums.push_back(5);
-    nums.push_back(6);
+    // nums.push_back(8);
 
     cout << "Test Result: " << endl;
     // for (int num : search(nums, t)) cout << num << " ";
@@ -93,5 +56,5 @@ int main(){
     //     cout<< endl;
     // }
     // cout << endl;
-    cout << minDays(nums, m, k) << endl;
+    cout << smallestDivisor(nums, t) << endl;
 }
