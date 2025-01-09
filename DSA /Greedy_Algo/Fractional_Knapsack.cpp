@@ -7,7 +7,7 @@
 // with each weighting {20,10,30} overall not per item
 
 // now you have a bag that can handle infinite number of item
-// but do have a weight limit, tell the maximum quantity to be fitted in bag
+// but do have a weight limit (50), tell the maximum quantity to be fitted in bag
 // its a common problem in real world
 // where you need to optimize two factors when you dont have one
 
@@ -66,3 +66,15 @@ int main() {
 
     return 0;
 }
+
+
+// The ans here is 240 for above example 
+// {100,60,120} - Items
+// {20,10,30} - Weights
+// weight limit 50
+// 100 - 20 -> all 100 of First Items with 20 weight
+// 160 - 30 -> all 60 of Second Items with 10 weight
+// 240 - 50 -> only 80 of Third Items with (80/120)*30 = 10 Weight
+
+// here its optimall only but think if 
+// 60 was swapped with 120 then the optimal ans would be different
