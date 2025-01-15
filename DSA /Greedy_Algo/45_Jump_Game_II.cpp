@@ -3,36 +3,46 @@
 #include <algorithm>
 using namespace std;
 
-bool canJump(vector<int>& nums) {
+int jump(vector<int>& nums) {
     int size = nums.size();
-    int jumpNode = size-1;
+    int c = 0;
+    int l = 0;
+    int r = 0;
+    
+    int jumps = 0;
 
-    int i = size-2;
-    while (i >= 0)
+    int max = -1;
+    while (r<size-1)
     {
-        if (nums[i]>=jumpNode-i)
+        for (int i = l; i <= r; i++)
         {
-            jumpNode = i;
+            int temp = nums[i];
+            if (nums[i]+i>max)
+            {
+                max = nums[i]+i;
+            }
         }
-        i--;
+        l = r+1;
+        r = max;
+        jumps++;
     }
-    // if (jumpNode == 0)
-    // {
-    //     return true;
-    // }
-    // return false;
-    return jumpNode==0;
+
+    return jumps;
 }
 
 int main() {
 
     vector<int> nums;
-    nums.push_back(3);
     nums.push_back(2);
+    nums.push_back(3);
     nums.push_back(1);
-    nums.push_back(0);
     nums.push_back(4);
+    nums.push_back(1);
+    nums.push_back(1);
+    nums.push_back(1);
+    nums.push_back(2);
 
-    cout << canJump(nums) << endl;
+    int res = jump(nums);
+    cout << res << endl;
     return 0;
 }
