@@ -5,26 +5,30 @@ using namespace std;
 
 int jump(vector<int>& nums) {
     int size = nums.size();
-    int c = 0;
-    int l = 0;
-    int r = 0;
-    
     int jumps = 0;
+    int max_jump_length = nums[0];
 
-    int max = -1;
-    while (r<size-1)
-    {
-        for (int i = l; i <= r; i++)
+    int temp = 0;
+    int temp1 = 0;
+    while(max_jump_length<size){
+        // cout << max_jump_length << endl;
+        if (max_jump_length==size-1)
         {
-            int temp = nums[i];
-            if (nums[i]+i>max)
+            jumps++;
+            return jumps;
+        }
+        
+        temp = max_jump_length;
+        for (int i = temp1; i < max_jump_length; i++)
+        {
+            // cout << "in" << endl;
+            if (nums[i]+i>max_jump_length)
             {
-                max = nums[i]+i;
+                max_jump_length = nums[i]+i;
+                jumps ++;
             }
         }
-        l = r+1;
-        r = max;
-        jumps++;
+        temp1 = temp;
     }
 
     return jumps;
